@@ -10,7 +10,13 @@ This repo contains toy implemantations for some bioinformatics algorithms
   - Local and global pairwise sequence alignment
   - Profile HMM
   - RNA folding 
-- Gibbs sampling / EM based motif finder
+- Motif finding
+  - Random projection
+  ```bash
+  g++ src/em-motif.cpp src/utils.cpp src/motifs.cpp  -o bin/em-motif
+  ```
+  - Expectation Maximization
+  - Gibbs sampling
 
 
 
