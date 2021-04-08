@@ -75,6 +75,7 @@ void findall_Z(std::string &q, std::string &s,std::vector<size_t>& positions){
 
 
 // Build pi table for KMP string comparison
+// pi is called suffix function in Introduction to Algorithms
 // Refer to https://www.geeksforgeeks.org/kmp-algorithm-for-pattern-searching/
 void get_pi(std::string& s,std::vector<size_t>& pi){
  size_t i = 1; //Current position relative to input string

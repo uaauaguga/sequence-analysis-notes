@@ -6,7 +6,13 @@ This repo contains toy implemantations for some bioinformatics algorithms
     - See animation [here](https://personal.utdallas.edu/~besp/demo/John2010/z-algorithm.htm)
 - Finite state automaton and regular expression
 - Some dynamic programming examples
-- Local and global pairwise sequence alignment
-- Profile HMM
+  - Longest common substring
+  - Local and global pairwise sequence alignment
+  - Profile HMM
+  - RNA folding 
 - Gibbs sampling / EM based motif finder
-- RNA folding
+
+
+
+- Reference
+- <https://web.stanford.edu/class/cs97si/>
