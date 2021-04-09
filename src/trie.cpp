@@ -1,5 +1,7 @@
 #include <iostream>
+#include <stack>
 #include "trie.h"
+
 
 node::node(){
   for(int i=0;i<4;i++){
@@ -21,22 +23,33 @@ trie::trie(std::map<std::string,std::string> &db){
     }
 }
 
-
+// Perform preorder traverse
 void trie::traverse(){
     node * p = root;
-    while(p){
-      int i = 0;
-      while(i<4){
-          if(p->next[i])break;
-          i++;
+    int idx;
+    std::stack<node*> pstk;
+    std::stack<int> idxstk; // Keep track of the character
+    idxstk.push(-1);
+    pstk.push(p);
+    while(pstk.size()>0){
+      p = pstk.top();pstk.pop();
+      idx = idxstk.top();idxstk.pop();
+      if(idx>=0)std::cout<<alphabets[idx];
+      if(p->end)std::cout<<std::endl;
+      int i = 3;
+      while(i>=0){
+        if(p->next[i]){
+            pstk.push(p->next[i]);
+            idxstk.push(i);
         }
-        if(i==4)break;
-        p = p->next[i];
-        if(p)std::cout<<alphabets[i];
+        i--;
+      }
     }
     std::cout<<std::endl;
 }
 
+
+// Insert an entry into the trie
 void trie::insert(std::string s){
    node * p = root;
    char c;

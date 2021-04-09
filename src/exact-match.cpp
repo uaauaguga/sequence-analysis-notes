@@ -174,14 +174,9 @@ int main(int argc,char * argv[]){
   //load_fasta(path_query,query);
   //match(db,query);
   trie *tree = new trie;
-  tree->insert("CGATCA");
-  tree->insert("CACGC");
-  tree->insert("CACAC");
-  tree->insert("GGGACA");
-  tree->insert("CACAT");
-  std::string q = "CACAC";
-  std::cout<<tree->query(q)<<std::endl;
-  q = "GCATGCAT";
-  std::cout<<tree->query(q)<<std::endl;
+  tree->insert("TAATAG");
+  tree->insert("TAATAC");
+  tree->insert("TACTAC");
+  tree->traverse();
 return 0;
 }
