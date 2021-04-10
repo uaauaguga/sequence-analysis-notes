@@ -1,6 +1,6 @@
 # Some sequence analysis task
 - This repo contains **toy** implemantations for some bioinformatics algorithms, **not** tested and optimized for practical usage
-
+- Here list some related resources and papers
 ## Sequence comparison
 ### Exact matching
 - KMP algorithm (learn from mismatch)
@@ -61,22 +61,29 @@
 
 ## RNA analysis
 - See <http://rna.informatik.uni-freiburg.de/Teaching/index.jsp>
-- MFE Folding
-  - Without pseudoknot
-    - Nussinov Folding: maximize number of base pairing
 
-   ```bash
-   g++ src/nussinov-folding.cpp -o bin/nussinov-folding
-   ```
+### Nussinov Folding
+- maximize number of base pairing
+  
+```bash
+  g++ src/nussinov-folding.cpp -o bin/nussinov-folding
+```
 
-  - With pseudoknot
-- Partition fucntion
-  - McCaskill's algorithm
-    - <https://onlinelibrary.wiley.com/doi/abs/10.1002/bip.360290621>
-  - Pairing probability
-  - MEA structure
-- SCFG 
-- Structural alignment
+### MFE Folding
+
+
+### Partition fucntion of RNA structure
+- McCaskill's algorithm
+  - <https://onlinelibrary.wiley.com/doi/abs/10.1002/bip.360290621>
+- Pairing probability
+
+### MEA folding
+- 2007, Hisanori Kiryu et al, *Bioinformatics*, [Robust prediction of consensus secondary structures using averaged base pairing probability matrices](https://academic.oup.com/bioinformatics/article/23/4/434/182043)
+- 2009, Zhi John Lu et al, *RNA*, [Improved RNA secondary structure prediction by maximizing expected pair accuracy](https://rnajournal.cshlp.org/content/15/10/1805.long)
+
+### Structural alignment
+- Sankoff's simultaneous alignment and folding
+
 
 ## Motif finding
 - Random projection
