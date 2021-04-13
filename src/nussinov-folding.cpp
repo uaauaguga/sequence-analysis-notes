@@ -3,7 +3,27 @@
 #include<iostream>
 #include<map>
 
-void fold(std::string s){
+void backtracking(int ** dpmt,int i,int j,std::string& structure){
+  if(i<j){
+    int k;
+    if(dpmt[i][j]==dpmt[i][j-1]){
+      j--;
+    }else{
+      for(k=i;k<j;k++){
+        if(dpmt[i][j]==dpmt[i][k-1]+dpmt[k+1][j-1]+1){
+          structure[k] = '(';
+          structure[j] = ')';
+          backtracking(dpmt,i,k-1,structure);
+          backtracking(dpmt,k+1,j-1,structure);
+          break;
+        }
+      }
+    }
+  }
+}
+
+
+std::string fold(std::string s){
 
   int l = s.length();
   // Initialize dynamic programming matrix
@@ -64,9 +84,7 @@ void fold(std::string s){
           kmax=k;
           max_unpaired_score = unpaired_score;
         }
-        //std::cout<<paired_score<<"\t"<<unpaired_score<<std::endl;
         if(paired_score>max_unpaired_score){
-          std::cout<<i<<"\t"<<j<<std::endl;
           dpmt[i][j] = paired_score;
         }else{
           dpmt[i][j] = max_unpaired_score;
@@ -75,11 +93,20 @@ void fold(std::string s){
     }
   }
 
+  /*
   for(i=0;i<l;i++){
     for(j=0;j<l;j++)
       std::cout<<dpmt[i][j]<<" ";
       std::cout<<"\n";
+  }*/
+  
+  std::string structure(s.length(),'.');
+  backtracking(dpmt,0,s.length()-1,structure);
+  for(i=0;i<l;i++){
+      delete dpmt[i];
   }
+  delete dpmt;
+  return structure;
 }
 
 
@@ -105,7 +132,8 @@ int main(int argc,char * argv[]){
 		    printf("Unrecognized argument : %c.\n",opt);
     }
   }
-  std::cout<<"Input sequence is: "<<sequence<<std::endl;
-  fold(sequence);
+  std::cout<<"Input sequence is:   "<<sequence<<std::endl;
+  std::string structure = fold(sequence);
+  std::cout<<"Output structure is: "<<structure<<std::endl;
 return 0;
 }
