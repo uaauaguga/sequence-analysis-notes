@@ -25,6 +25,7 @@
   - A compressed version of trie
   - Also called radix trie or compact prefix tree
 
+
 - Suffix tree 
   - Very verstile data structure in sequence analysis
   - <https://web.stanford.edu/~mjkay/suffix_tree.pdf>

@@ -11,10 +11,38 @@ void print_bppm(const std::map<coord,float>& bppm){
 }
 
 
+void backtracking(float ** dpmt,
+                 const std::map<coord,float>& bppm,
+                 int i,int j,
+                 std::string& structure,
+                 float gamma,int span){
+  while(i<j){
+    int k;
+    float epsilon = 0.001;
+    float prob_unpaired = bppm.find(std::make_pair(j,j))->second;
+    if(abs(dpmt[i][j]-dpmt[i][j-1]-prob_unpaired)<epsilon){
+      j--;
+    }else{
+      for(k=i;k<j-span;k++){
+        std::map<coord,float>::const_iterator it = bppm.find(std::make_pair(k,j));
+        if(it==bppm.end())continue;
+        float prob_paired = it->second;
+        if(abs(dpmt[i][j]-dpmt[i][k-1]-dpmt[k+1][j-1]-prob_paired*gamma)<epsilon){
+          structure[k] = '(';
+          structure[j] = ')';
+          backtracking(dpmt,bppm,i,k-1,structure,gamma,span);
+          backtracking(dpmt,bppm,k+1,j-1,structure,gamma,span);
+          break;
+        }
+      }
+      return ;
+    }
+  }
+}
+
 std::string MEA(const std::map<coord,float>& bppm,
                 const std::string &sequence,
                 const float gamma, const int span){
-  std::string structure;
   // Initialize dynamic programming matrix
   int L = sequence.length();
   float ** dpmt = new float * [L];
@@ -51,7 +79,6 @@ std::string MEA(const std::map<coord,float>& bppm,
           }
        }
        if(max_paired_score>=unpaired_score){
-         std::cout<<j<<"paired"<<std::endl;
          dpmt[i][j] = max_paired_score;
        }else{
          dpmt[i][j] = unpaired_score;
@@ -60,12 +87,16 @@ std::string MEA(const std::map<coord,float>& bppm,
     }
   }
 
-  
+  /*
   for(i=0;i<L;i++){
     for(j=0;j<L;j++)
       std::cout<<dpmt[i][j]<<" ";
       std::cout<<"\n";
-  }
+  }*/
+  
+
+  std::string structure(L,'.');
+  backtracking(dpmt,bppm,0,L-1,structure,gamma,span);
 
   for(i=0;i<L;i++){
       delete dpmt[i];
@@ -83,8 +114,8 @@ int main(int argc,char * argv[]){
   int span = 2;
   static option long_options[] = {
 	  {"dotplot",required_argument,NULL,'d'},
-    {"gamma",optional_argument,NULL,'g'},
-    {"span",optional_argument,NULL,'s'},
+    {"gamma",required_argument,NULL,'g'},
+    {"span",required_argument,NULL,'s'},
     {"help",no_argument,NULL,'h'}
   };
   int option_index = 0;
@@ -106,6 +137,14 @@ int main(int argc,char * argv[]){
 		    std::cout<<"Unrecognized argument :"<<opt<<std::endl;
     }
   }
+
+  if(path.length()==0){
+    std::cout<<"Path of RNAplfold probabilty dotplot (.ps file) is required ."<<std::endl;
+    return 1;
+  }else if(!file_exists(path)){
+    std::cout<<"Input file does not exists."<<std::endl;
+    return 2;
+  }
   std::cout<<"Input path is : "<<path<<std::endl;
   std::string sequence;
   std::map<coord,float> bppm;
@@ -115,6 +154,8 @@ int main(int argc,char * argv[]){
   std::cout<<sequence<<std::endl;
   std::cout<<"Provided base pairing parobability matrix is: "<<std::endl;
   print_bppm(bppm);
-  MEA(bppm,sequence,gamma,span);
+  std::string structure = MEA(bppm,sequence,gamma,span);
+  std::cout<<"The MEA structure is : "<<std::endl;
+  std::cout<<structure<<std::endl;
 return 0;
 }
