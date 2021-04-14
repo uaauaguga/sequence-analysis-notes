@@ -1,14 +1,16 @@
 # Some sequence analysis task
-- This repo contains **toy** implemantations for some bioinformatics algorithms, **not** tested and optimized for practical usage
+- This repo contains **toy** implemantations for some bioinformatics algorithms in C++, only for practice, **not** well tested and optimized for practical usage
 - Here list some related papers, notes, and other meterials
 
 ## Sequence comparison
 ### Exact matching
-- KMP algorithm (learn from mismatch)
+- [KMP algorithm](https://en.wikipedia.org/wiki/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm) (learn from mismatch)
 - Z algorithm
   - See animation [here](https://personal.utdallas.edu/~besp/demo/John2010/z-algorithm.htm)
+  - <https://www.cs.cmu.edu/~ckingsf/bioinfo-lectures/zalg.pdf>
 
 - Finite state automaton and regular expression
+  - Pattern matching FSA
 
 - trie (re**trie**val)
   - also called digital tree or prefix tree
@@ -88,6 +90,9 @@
 - 2009, Zhi John Lu et al, *RNA*, [Improved RNA secondary structure prediction by maximizing expected pair accuracy](https://rnajournal.cshlp.org/content/15/10/1805.long)
 
 ### Structural alignment
+- The RIBOSUM scoring schema
+  - params/RIBOSUM90.mat is copied from rsearch-1.1/matrices/RIBOSUM90.mat in <http://eddylab.org/software/rsearch/rsearch.tar.gz>
+  - Also see  2003, BMC Bioinformatics, [RSEARCH: Finding homologs of single structured RNA sequences](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-4-44)
 - Sankoff's simultaneous alignment and folding
   - Dynamic programming for structural alignment
   - 1985, David Sankoff, Society for Industrial and Applied Mathematics, [Simultaneous solution of the RNA folding, alignment and protosequence problems](https://epubs.siam.org/doi/10.1137/0145048)
@@ -96,6 +101,9 @@
 - [PMcomp](https://www.tbi.univie.ac.at/RNA/PMcomp/) like algorithm
   - Align structure based on pre-computed base pairing probability matrix
   - 2004, Ivo L. Hofacker et al, *Bioinformatics*, [Alignment of RNA base pairing probability matrices](https://academic.oup.com/bioinformatics/article/20/14/2222/214007)
+  ```bash
+  g++ src/align-dotplot.cpp src/utils.cpp -o bin/align-dotplot
+  ```
   - [LocaRNA](http://www.bioinf.uni-freiburg.de/Software/LocARNA/)
     - 2017, Plos Computational Biology, [Inferring Noncoding RNA Families and Classes by Means of Genome-Scale Structure-Based Clustering](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.0030065)
   - Murlet

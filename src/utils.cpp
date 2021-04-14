@@ -86,3 +86,29 @@ void load_ps(std::string path,std::map<coord,float>& bppm,std::string& sequence)
     }
   }
 }
+
+
+ void load_scoring_mtx(std::string path,std::map<conversion,float> &scoring_mtx){
+  std::string a,b;
+  float score;
+  std::cout<<path<<std::endl;
+  std::ifstream fscore(path);
+  if (fscore.is_open())
+  {
+   while (fscore >> a >> b>>score){
+    scoring_mtx[std::make_pair(a,b)] = score;
+    if(a!=b)
+      scoring_mtx[std::make_pair(b,a)] = score;
+   }
+    fscore.close();
+  }else{
+    std::cout << "Unable to open file"; 
+  }
+}
+
+void print_scoring_mtx(const std::map<conversion,float>& scores){
+  for(std::map<conversion,float>::const_iterator it = scores.begin();
+  it!=scores.end();it++){
+    std::cout<<it->first.first<<"\t"<<it->first.second<<"\t"<<it->second<<std::endl;
+  }
+}

@@ -133,6 +133,7 @@ int main(int argc,char * argv[]){
         break;
       case 's':
         span = std::atoi(optarg);
+        break;
       default:
 		    std::cout<<"Unrecognized argument :"<<opt<<std::endl;
     }
