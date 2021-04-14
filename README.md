@@ -35,7 +35,7 @@
 - Suffix array
   - Simialr functionality as siffix, with less memory overhead
   - <https://www.cs.unc.edu/~prins/Classes/555/Media/Lec17.pdf>
-  - 2014, BIB, [A bioinformatician’s guide to the forefront of suffix array construction algorithms](https://academic.oup.com/bib/article/15/2/138/212729)
+  - 2014, *BIB*, [A bioinformatician’s guide to the forefront of suffix array construction algorithms](https://academic.oup.com/bib/article/15/2/138/212729)
   - Mutiple method for suffix array construction <http://www.cas.mcmaster.ca/~bill/best/algorithms/07Taxonomy.pdf>
 
 
@@ -44,9 +44,10 @@
   - [BWT](https://en.wikipedia.org/wiki/Burrows%E2%80%93Wheeler_transform)
     - Burrows-Wheeler block-sorting transform
     - Orinially designed for data compression 
+    - Some reference
       - <https://www.cs.unc.edu/~prins/Classes/555/Media/Lec17.pdf>
-  - <https://people.unipmn.it/manzini/papers/mfcs99x.pdf>
-  - <https://www.labri.fr/perso/ruricaru/bioinfo_master2/cours3.pdf>
+      - <https://people.unipmn.it/manzini/papers/mfcs99x.pdf>
+      - <https://www.labri.fr/perso/ruricaru/bioinfo_master2/cours3.pdf>
   
 - Compressed suffix array
   - Similar to FM index
@@ -92,7 +93,7 @@
 ### Structural alignment
 - The RIBOSUM scoring schema
   - params/RIBOSUM90.mat is copied from rsearch-1.1/matrices/RIBOSUM90.mat in <http://eddylab.org/software/rsearch/rsearch.tar.gz>
-  - Also see  2003, BMC Bioinformatics, [RSEARCH: Finding homologs of single structured RNA sequences](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-4-44)
+  - Also see  2003, *BMC Bioinformatics*, [RSEARCH: Finding homologs of single structured RNA sequences](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-4-44)
 - Sankoff's simultaneous alignment and folding
   - Dynamic programming for structural alignment
   - 1985, David Sankoff, Society for Industrial and Applied Mathematics, [Simultaneous solution of the RNA folding, alignment and protosequence problems](https://epubs.siam.org/doi/10.1137/0145048)
@@ -103,11 +104,18 @@
   - 2004, Ivo L. Hofacker et al, *Bioinformatics*, [Alignment of RNA base pairing probability matrices](https://academic.oup.com/bioinformatics/article/20/14/2222/214007)
   ```bash
   g++ src/align-dotplot.cpp src/utils.cpp -o bin/align-dotplot
+  bin/align-dotplot --dotplot-A test/test1_dp.ps  --dotplot-B test/test_dp.ps
   ```
-  - [LocaRNA](http://www.bioinf.uni-freiburg.de/Software/LocARNA/)
-    - 2017, Plos Computational Biology, [Inferring Noncoding RNA Families and Classes by Means of Genome-Scale Structure-Based Clustering](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.0030065)
-  - Murlet
-  - FoldalignM
+  - without pseudoknot
+    - [LocaRNA](http://www.bioinf.uni-freiburg.de/Software/LocARNA/)
+      - 2007, *Plos Computational Biology*, [Inferring Noncoding RNA Families and Classes by Means of Genome-Scale Structure-Based Clustering](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.0030065)
+    - Murlet
+      - 2007, *Bioinformatics*, [Murlet: a practical multiple alignment tool for structural RNA sequences](https://academic.oup.com/bioinformatics/article/23/13/1588/221758)
+    - FoldalignM
+      - 2007, *Bioinformatics*, [Multiple structural alignment and clustering of RNA sequences](https://academic.oup.com/bioinformatics/article/23/8/926/198434)
+  - with pseudoknot
+    - 2012, NAR, [CARNA—alignment of RNA structure ensembles](https://academic.oup.com/nar/article/40/W1/W49/1078095), also see their publication in 2010 [A Propagator for Maximum Weight String Alignment with Arbitrary Pairwise Dependencies](https://link.springer.com/content/pdf/10.1007/978-3-642-15396-9_16.pdf)
+    - 
 
 - SCFG based
   - Consan
