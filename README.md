@@ -58,11 +58,13 @@
   - common substring: allow gaps
   - common subsequence: not allow gaps
 - Local and global pairwise sequence alignment
-  - [Needleman-Wunsch global alignment](https://en.wikipedia.org/wiki/Needleman%E2%80%93Wunsch_algorithm) with affine gap penalty
+  - Scoring of sequence alignment
+  - [Needleman-Wunsch global alignment](https://en.wikipedia.org/wiki/Needleman%E2%80%93Wunsch_algorithm) 
   ```bash
+  # with affine gap penalty
   g++  src/needleman-wunsch.cpp -o bin/needleman-wunsch
   ```
-  - 
+  - [Smith-Waterman local alignment](https://en.wikipedia.org/wiki/Smith%E2%80%93Waterman_algorithm)
 
 - [Dynamic time warping (DTW)](https://en.wikipedia.org/wiki/Dynamic_time_warping)
   - Highly similar to dynamic programming for sequence alignment

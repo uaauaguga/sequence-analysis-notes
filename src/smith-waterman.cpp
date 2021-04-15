@@ -19,60 +19,60 @@ void align(std::string& s1,std::string& s2,int match=0,int mismatch=2,int gap_op
     insert_1_scores[i] = new int[L2+1];
     insert_2_scores[i] = new int[L2+1];
   }
+
+  int i_max=L1,j_max=L2;
+  int max_score = 0;
+
   for(i = 0; i <= L1; ++i){
     for(j = 0; j <= L2; ++j){
-       if(i==0&&j==0){
-         match_scores[i][j] = 0;
-         insert_1_scores[i][j] = -1*std::numeric_limits<float>::infinity();
-         insert_2_scores[i][j] = -1*std::numeric_limits<float>::infinity();
+       if(i==0||j==0){
+         match_scores[i][j] = insert_1_scores[i][j] = insert_2_scores[i][j] = 0;
        }else{ 
-          if(i==0){
-           m_i2 = match_scores[i][j-1] - gap_open;
-           i2_i2 = match_scores[i][j-1] - gap_extension;
-           insert_1_scores[i][j] = insert_2_scores[i][j] = match_scores[i][j] = m_i2>i2_i2?m_i2:i2_i2;
-          }else if(j==0){
-           m_i1 = match_scores[i-1][j] - gap_open;
-           i1_i1 = match_scores[i-1][j] - gap_extension;
-           insert_1_scores[i][j] = insert_2_scores[i][j] = match_scores[i][j] = m_i1>i1_i1?m_i1:i1_i1;
-          }else{
-           //case 1. s1[i] matched to s2[j]
+           // case 1. s1[i] matched to s2[j]
+           // Maximum score can only be produced in this case, as gaps are penalized
            int sub = (s1[i-1]==s2[j-1])? match:(-1*mismatch);
            m_m = match_scores[i-1][j-1] + sub;
            i1_m = insert_1_scores[i-1][j-1] + sub;
            i2_m = insert_2_scores[i-1][j-1] + sub;
            m = m_m>i1_m?m_m:i1_m;m = m>i2_m?m:i2_m;
+           m = m>0?m:0;
            match_scores[i][j] = m;
-
+           if(m > max_score){
+             max_score = m;
+             i_max = i;
+             j_max = j;
+           }
            //case 2. s1[i] matched to a gap
            m_i1 = match_scores[i-1][j] - gap_open;
            i1_i1 = insert_1_scores[i-1][j] - gap_extension;
            i1 = m_i1>i1_i1?m_i1:i1_i1;
+           i1 = i1>0?i1:0;
            insert_1_scores[i][j] = i1;
            
            //case 3. s2[j] matched to a gap
            m_i2 = match_scores[i][j-1] - gap_open;
            i2_i2 = insert_2_scores[i][j-1] - gap_extension;
            i2 = m_i2>i2_i2?m_i2:i2_i2;
+           i2 = i2>0?i2:0;
            insert_2_scores[i][j] = i2;
           }
-         }
        }
     }
  
-  i = L1;
-  j = L2;
+  i = i_max;
+  j = j_max;
   std::string align_1 = "";
   std::string align_2 = "";
-  while(i>0&&j>0){
+  while(match_scores[i][j]>0){
     m = match_scores[i][j];
     i1 = insert_1_scores[i][j];
     i2 = insert_2_scores[i][j];
-    if(m>=i1&&m>=i2){
+    if(m>i1&&m>i2){
       align_1 = s1[i-1] + align_1;
       align_2 = s2[j-1] + align_2;
       i--;j--;
     }else{
-      if(i1>=i2){
+      if(i1>i2){
         align_1 = "-" + align_1;
         align_2 = s2[j-1] + align_2;
         i--;
@@ -87,13 +87,13 @@ void align(std::string& s1,std::string& s2,int match=0,int mismatch=2,int gap_op
   std::cout<<align_2<<std::endl;
 }
 
-// needleman wunsch algorithm for global alignment of two sequences
+// smith–waterman algorithm for local alignment of two sequences
 int main(int argc,char * argv[]){
   int opt;
   int gap_open = 5; // penalty for gap opening
   int gap_extension = 3; // penalty for gap extension
   int mismatch = 2; // penalty for mismatch
-  int match = 0; // match bonus
+  int match = 2; // match bonus
   std::string s1,s2;
 
   static option long_options[] = {
