@@ -1,7 +1,6 @@
 #include<iostream>
 #include <fstream>
 #include<sstream>
-#include <vector>
 #include "utils.h"
 
 void load_fasta(std::string path,std::map<std::string,std::string>& sequences){
@@ -18,9 +17,8 @@ void load_fasta(std::string path,std::map<std::string,std::string>& sequences){
 }
 
 
-std::vector<std::string> split(const std::string& str,char sep)
+std::vector<std::string> split(const std::string& s,char sep)
 {
-	std::string s=str;
 	std::string token;
 	std::stringstream ss(s);
 	std::vector<std::string> tokens;
@@ -112,3 +110,89 @@ void print_scoring_mtx(const std::map<conversion,float>& scores){
     std::cout<<it->first.first<<"\t"<<it->first.second<<"\t"<<it->second<<std::endl;
   }
 }
+
+
+void Matrix::read(std::string path){
+  std::cout<<path<<std::endl;
+  std::ifstream fdata(path);
+  std::string line;
+  if (fdata.is_open())
+  {
+    std::vector<std::vector<std::string>> data;
+    int n_lines = 0;
+    int n_fields;
+    while (std::getline(fdata, line)){
+      std::vector<std::string> fields = split(line,'\t');
+      if(n_lines==0){
+        n_fields = fields.size();
+      }else{
+        if(fields.size()!=n_fields)
+          std::cout<<"Number of fields is inconsistent ."<<std::endl;
+      }
+      data.push_back(fields);
+      n_lines += 1;
+    }
+    nrows = n_lines - 1;
+    ncols = n_fields - 1;
+    values = new float*[nrows];
+
+
+    // Get index names
+    for(int r = 1;r<n_lines;r++){
+      index.push_back(data[r][0]);
+      rn2ri[data[r][0]] = r-1;
+    }
+      
+
+    // Get column names
+    for(int c = 1;c<n_fields;c++){
+      column.push_back(data[0][c]);
+      cn2ci[data[0][c]] = c-1;
+    }
+     
+
+    // Load data
+    for(int r = 0;r<nrows;r++){
+      values[r] = new float [ncols];
+      for(int c = 0;c<ncols;c++)
+        values[r][c] = std::atof(data[r+1][c+1].c_str());
+    }
+    fdata.close();
+
+  }else{
+    std::cout << "Unable to open file"; 
+  }  
+}
+
+void Matrix::write(std::ostream& fout,std::string sep="\t"){
+  fout<<""<<sep;
+  for(int c=0;c < ncols;c++)
+    fout<<column[c]<<sep;
+  fout<<std::endl;
+  for(int r = 0;r<nrows;r++){
+    fout<<index[r]<<sep;
+    for(int c=0;c < ncols;c++)
+      fout<<values[r][c]<<sep;
+    if(r!=nrows-1)
+      fout<<std::endl;
+  }
+  
+}
+
+void Matrix::save(std::string path){
+   std::ofstream fout;
+   fout.open(path);
+   this->write(fout);
+   fout.close();
+}
+ 
+void Matrix::print(){
+   this->write(std::cout);
+   std::cout<<"\n";
+}
+
+
+float Matrix::get(std::string rname,std::string cname) const {
+  return values[rn2ri.find(rname)->second][cn2ci.find(cname)->second];
+}
+ 

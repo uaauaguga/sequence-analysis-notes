@@ -3,6 +3,7 @@
 #include<sys/stat.h>
 #include<string>
 #include<map>
+#include <vector>
 #include <utility>
 #include<tuple>
 
@@ -24,4 +25,20 @@ inline bool file_exists(const std::string& name) {
   struct stat buffer;   
   return (stat (name.c_str(), &buffer) == 0); 
 }
+
+struct Matrix{
+    int ncols,nrows;
+    std::vector<std::string> index;
+    std::vector<std::string> column;
+    std::map<std::string,int> cn2ci;
+    std::map<std::string,int> rn2ri;
+    float ** values;
+    void read(std::string);
+    void write(std::ostream&,std::string);
+    void print();
+    void save(std::string);
+    float get(std::string,std::string) const ;
+};
+
+
 #endif

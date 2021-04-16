@@ -61,18 +61,30 @@
   - Scoring of sequence alignment
   - [Needleman-Wunsch global alignment](https://en.wikipedia.org/wiki/Needleman%E2%80%93Wunsch_algorithm) 
   ```bash
-  # with affine gap penalty
+  # with affine gap penalty, implemented as a finite state automaton
   g++  src/needleman-wunsch.cpp -o bin/needleman-wunsch
   ```
   - [Smith-Waterman local alignment](https://en.wikipedia.org/wiki/Smith%E2%80%93Waterman_algorithm)
 
 - [Dynamic time warping (DTW)](https://en.wikipedia.org/wiki/Dynamic_time_warping)
   - Highly similar to dynamic programming for sequence alignment
+
+### HMM in sequence analysis
+- Inference
+  - Given the model, calculate probability of an observed sequence
+  - Forward algorithm
+- Decoding
+  - Given model and observed sequence, calculate most probable hidden states
+  - viterbi/global decoding and posterior/local decoding
+- Training
+  - Given obervations, and HMM model structure, calculate model parameters
+  - BM training and viterbi training
 - Profile HMM
 
 ## Sequence assembly
 
-- DeBruijn Graph
+- [DeBruijn Graph](https://en.wikipedia.org/wiki/De_Bruijn_graph)
+  - 2008, Genome Research [Velvet: Algorithms for de novo short read assembly using de Bruijn graphs](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2336801/pdf/821.pdf)
 
 ## RNA analysis
 - See <http://rna.informatik.uni-freiburg.de/Teaching/index.jsp>
