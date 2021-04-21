@@ -98,7 +98,6 @@
   g++ src/nussinov-folding.cpp -o bin/nussinov-folding
 ```
 
-### MFE Folding
 
 
 ### Partition fucntion of RNA structure
@@ -110,6 +109,10 @@
 - 2006, Chuong B. Do et al, *Bioinformatics*, [CONTRAfold: RNA secondary structure prediction without physics-based models](https://academic.oup.com/bioinformatics/article/22/14/e90/228433)
 - 2007, Hisanori Kiryu et al, *Bioinformatics*, [Robust prediction of consensus secondary structures using averaged base pairing probability matrices](https://academic.oup.com/bioinformatics/article/23/4/434/182043)
 - 2009, Zhi John Lu et al, *RNA*, [Improved RNA secondary structure prediction by maximizing expected pair accuracy](https://rnajournal.cshlp.org/content/15/10/1805.long)
+
+### [Context free grammer](https://en.wikipedia.org/wiki/Context-free_grammar) (CFG) and sttochastic context free grammer (SCFG)
+- CFG and [CYK parsing](https://en.wikipedia.org/wiki/CYK_algorithm)
+
 
 ### Structural alignment
 - The RIBOSUM scoring schema
@@ -158,3 +161,4 @@
 - <https://web.stanford.edu/class/cs97si/>
 ### Algorithms in Bioinformatics
 - <https://www.comp.nus.edu.sg/~ksung/algo_in_bioinfo/>
+- [CS262, computational genomics](https://web.stanford.edu/class/cs262/cgi-bin/index.php)

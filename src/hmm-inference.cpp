@@ -39,7 +39,10 @@ int main(int argc,char * argv[]){
   transition.read(transition_path);
   //emission.print();
   int s;
-  float** alpha = forward(observation,emission, transition,false);
+  float** alpha = new float*[transition.ncols];
+  for(s=0;s<transition.ncols;s++)
+    alpha[s] = new float[observation.length()];
+  forward(alpha,observation,emission, transition,false);
 
   float likelihood = 0;
   for(s=0;s<emission.nrows;s++){
@@ -47,7 +50,10 @@ int main(int argc,char * argv[]){
   }
   std::cout<<"Likelihood by backward algorithm is: "<<likelihood<<std::endl;
 
-  float** beta = backward(observation,emission, transition,false);
+  float** beta = new float*[transition.ncols];
+  for(s=0;s<transition.ncols;s++)
+    beta[s] = new float[observation.length()];
+  backward(beta,observation,emission, transition,false);
   likelihood = 0;
   int symbol = emission.cn2ci.find(observation.substr(0,1))->second;
   for(s=0;s<emission.nrows;s++){

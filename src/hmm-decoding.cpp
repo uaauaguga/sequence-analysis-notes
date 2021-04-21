@@ -41,7 +41,18 @@ int main(int argc,char * argv[]){
   int L = observation.length();
 
   // Local decoding
-  float** gamma = forward_backward(observation,emission,transition);
+  float **alpha,**beta,**gamma;
+  alpha = new float*[transition.ncols];
+  beta = new float*[transition.ncols];
+  gamma = new float*[transition.ncols];
+  for(int s = 0;s<transition.ncols;s++){
+    alpha[s] = new float[L];
+    beta[s] = new float[L];
+    gamma[s] = new float[L];
+  }
+  forward(alpha,observation,emission,transition,false);
+  backward(beta,observation,emission,transition,false);
+  forward_backward(alpha,beta,gamma,observation,emission,transition);
 
   /*
   for(s=0;s<emission.nrows;s++){
